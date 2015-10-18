@@ -1,4 +1,4 @@
-package mpoo.ufrpe.projetoalergia.dominio;
+package mpoo.ufrpe.projetoalergia.dominio.dominioPessoa;
 
 public class Usuario {
 

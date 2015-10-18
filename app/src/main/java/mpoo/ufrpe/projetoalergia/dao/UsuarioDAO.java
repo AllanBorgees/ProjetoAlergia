@@ -1,9 +1,11 @@
 package mpoo.ufrpe.projetoalergia.dao;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import mpoo.ufrpe.projetoalergia.dominio.Usuario;
+import mpoo.ufrpe.projetoalergia.dominio.dominioPessoa.Pessoa;
+import mpoo.ufrpe.projetoalergia.dominio.dominioPessoa.Usuario;
 import mpoo.ufrpe.projetoalergia.gui.LoginActivity;
 
 /**
@@ -18,11 +20,11 @@ public class UsuarioDAO {
     private Helper helper = new Helper(LoginActivity.getContexto());
     private SQLiteDatabase db;
 
-    public Usuario buscarUsuario(String nome){
+    public Usuario buscarUsuario(String login){
         Usuario usuario = null;
         db = helper.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + Helper.TABELA_USUARIO +
-                " WHERE " + Helper.USUARIO_LOGIN + " = ?", new String[]{nome});
+                " WHERE " + Helper.USUARIO_LOGIN + " = ?", new String[]{login});
         if (cursor.moveToFirst()){
             usuario = new Usuario();
             usuario.setId(cursor.getInt(0));
@@ -32,8 +34,18 @@ public class UsuarioDAO {
         db.close();
         return usuario;
     }
+    public void cadastrarUsuario(Pessoa pessoa){
+//        db = helper.getWritableDatabase();
+//        ContentValues values = new ContentValues();
+//        values.put(Helper.USUARIO_LOGIN, pessoa.getUsuario().getLogin());
+//        values.put(Helper.USUARIO_SENHA, pessoa.getUsuario().getLogin());
+//        db.insert(Helper.TABELA_USUARIO, null, values);
+//        db.close();
+    }
 
-    public void InserirUsuario(){
+
+
+    public void inserirUsuario(){
         db = helper.getWritableDatabase();
         db.execSQL("INSERT INTO " + Helper.TABELA_USUARIO + "("+Helper.USUARIO_LOGIN+","+Helper.USUARIO_SENHA +") VALUES ('allan', '123') ");
         db.execSQL("INSERT INTO " + Helper.TABELA_USUARIO + "("+Helper.USUARIO_LOGIN+","+Helper.USUARIO_SENHA +") VALUES ('joao', '123') ");

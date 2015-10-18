@@ -20,6 +20,10 @@
             android:name=".gui.PesquisaActivity"
             android:label="@string/title_activity_pesquisa" >
         </activity>
+        <activity
+            android:name=".gui.CadastroActivity"
+            android:label="@string/title_activity_cadastro" >
+        </activity>
     </application>
 
 </manifest>

@@ -1,11 +1,13 @@
 package mpoo.ufrpe.projetoalergia.negocio;
 
+import android.text.TextUtils;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import mpoo.ufrpe.projetoalergia.dao.UsuarioDAO;
-import mpoo.ufrpe.projetoalergia.dominio.Usuario;
-
+import mpoo.ufrpe.projetoalergia.dominio.dominioPessoa.Usuario;
+import mpoo.ufrpe.projetoalergia.dominio.dominioPessoa.Pessoa;
 /**
  * Created by Allan on 15/10/2015.
  */
@@ -34,6 +36,25 @@ public class UsuarioNegocio {
         }
     }
 
+    public void validarCadastro(Pessoa pessoa) throws Exception{
+        Usuario usuario = dao.buscarUsuario(pessoa.getUsuario().getLogin());
+        StringBuilder builder = new StringBuilder();
+
+        if (usuario != null){
+            builder.append("Esse usuario já está cadastrado");
+        } else {
+            dao.cadastrarUsuario(pessoa);
+        }
+
+
+
+        if (builder.length() > 0){
+            throw new Exception(builder.toString());
+        }
+
+    }
+
+
     public void validarString(String login)throws Exception{
         Pattern pattern = Pattern.compile("\\s+");
         Matcher matcher = pattern.matcher(login);
@@ -44,7 +65,7 @@ public class UsuarioNegocio {
     }
 
     public void inserirUsuario(){
-        dao.InserirUsuario();
+        dao.inserirUsuario();
     }
 
 }
