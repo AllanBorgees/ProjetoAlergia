@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import mpoo.ufrpe.projetoalergia.dominio.dominioPessoa.Pessoa;
 import mpoo.ufrpe.projetoalergia.dominio.dominioPessoa.Usuario;
+import mpoo.ufrpe.projetoalergia.gui.CadastroActivity;
 import mpoo.ufrpe.projetoalergia.gui.LoginActivity;
 
 /**
@@ -25,7 +26,7 @@ public class UsuarioDAO {
         db = helper.getWritableDatabase();
 
         Cursor cursor = db.rawQuery("SELECT * FROM " + Helper.TABELA_USUARIO +
-                " WHERE " + Helper.USUARIO_LOGIN + " =?", new String[]{login});
+                " WHERE '" + Helper.USUARIO_LOGIN + "' =?", new String[]{login});
         if (cursor.moveToFirst()){
             usuario = new Usuario();
             usuario.setId(cursor.getInt(0));
@@ -37,11 +38,14 @@ public class UsuarioDAO {
     }
 
     public void cadastrarUsuario(Pessoa pessoa){
-        db = helper.getWritableDatabase();
+        Helper helperC = new Helper(CadastroActivity.getContexto());
+
+        db = helperC.getWritableDatabase();
+
         ContentValues values = new ContentValues();
         values.put(Helper.PESSOA_NOME, pessoa.getNome());
         values.put(Helper.PESSOA_CPF, pessoa.getCpf());
-        db.insert(Helper.TABELA_PESSOA, null, values);
+       db.insert(Helper.TABELA_PESSOA, null, values);
         values = new ContentValues();
         values.put(Helper.USUARIO_LOGIN, pessoa.getUsuario().getLogin());
         values.put(Helper.USUARIO_SENHA, pessoa.getUsuario().getSenha());
