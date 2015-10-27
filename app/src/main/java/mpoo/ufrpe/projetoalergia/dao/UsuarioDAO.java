@@ -25,7 +25,7 @@ public class UsuarioDAO {
         db = helper.getWritableDatabase();
 
         Cursor cursor = db.rawQuery("SELECT * FROM " + Helper.TABELA_USUARIO +
-                " WHERE " + Helper.USUARIO_LOGIN + " = ?", new String[]{login});
+                " WHERE " + Helper.USUARIO_LOGIN + " =?", new String[]{login});
         if (cursor.moveToFirst()){
             usuario = new Usuario();
             usuario.setId(cursor.getInt(0));
