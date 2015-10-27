@@ -15,7 +15,7 @@ public class Helper extends SQLiteOpenHelper {
         TABELA PESSOA
      */
     public static final String TABELA_PESSOA= "tabela_pessoa";
-    public static final String PESSOA_ID = "id_pessoa";
+    public static final String PESSOA_ID = "_id_pessoa";
     public static final String PESSOA_NOME = "nome_pessoa";
     public static final String PESSOA_CPF = "cpf_pessoa";
     public static final String PESSOA_DATA = "data_nascimento_pessoa";
@@ -25,7 +25,7 @@ public class Helper extends SQLiteOpenHelper {
     TABELA USUARIO
      */
     public static final String TABELA_USUARIO = "tabela_usuario";
-    public static final String USUARIO_ID = "id_usuario";
+    public static final String USUARIO_ID = "_id_usuario";
     public static final String USUARIO_LOGIN = "login_usuario";
     public static final String USUARIO_SENHA = "senha_usuario";
     public static final String USUARIO_PESSOA_ID = "id_pessoa_usuario";
@@ -65,7 +65,7 @@ public class Helper extends SQLiteOpenHelper {
                 USUARIO_LOGIN + " text not null, "+
                 USUARIO_SENHA + " text not null, " +
                 USUARIO_PESSOA_ID + " integer, "
-                +"foreign key (" +USUARIO_PESSOA_ID + ") references "+ TABELA_PESSOA+" ("+PESSOA_ID+");");
+                +"foreign key (" +USUARIO_PESSOA_ID + ") references "+ TABELA_PESSOA+" ("+PESSOA_ID+"));");
 
 //        db.execSQL("INSERT INTO " + TABELA_USUARIO + "("+USUARIO_LOGIN+","+USUARIO_SENHA +") VALUES ('allan', '123') ");
 //        db.execSQL("INSERT INTO " + TABELA_USUARIO + "("+USUARIO_LOGIN+","+USUARIO_SENHA +") VALUES ('joao', '123') ");
