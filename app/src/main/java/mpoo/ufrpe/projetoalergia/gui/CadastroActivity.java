@@ -1,18 +1,114 @@
 package mpoo.ufrpe.projetoalergia.gui;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import mpoo.ufrpe.projetoalergia.R;
+import mpoo.ufrpe.projetoalergia.dominio.dominioPessoa.Pessoa;
+import mpoo.ufrpe.projetoalergia.dominio.dominioPessoa.Usuario;
+import mpoo.ufrpe.projetoalergia.negocio.UsuarioNegocio;
 
 public class CadastroActivity extends AppCompatActivity {
+
+    private EditText editPessoaNome;
+    private EditText editPessoaCPF;
+    private EditText editUsuarioLogin;
+    private EditText editUsuarioSenha;
+    private EditText editUsuarioSenhaConfirmar;
+    private Button btnCadastrar;
+    private UsuarioNegocio usuarioNegocio;
+    private static Context contexto;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
+
+        contexto = this;
+        usuarioNegocio = UsuarioNegocio.getInstancia();
+
+        editPessoaNome = (EditText) findViewById(R.id.edtNomePessoa);
+        editPessoaCPF = (EditText) findViewById(R.id.edtCpf);
+        editUsuarioLogin= (EditText) findViewById(R.id.edtLoginCadastro);
+        editUsuarioSenha = (EditText) findViewById(R.id.edtSenhaCadastro);
+        editUsuarioSenhaConfirmar = (EditText) findViewById(R.id.edtConfirmarSenhaCadastro);
+
+
+        btnCadastrar = (Button) findViewById(R.id.btnCadastrarCadastro);
+
+
+
+        btnCadastrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String nome = editPessoaNome.getText().toString().trim();
+                String cpf = editPessoaCPF.getText().toString().trim();
+                String login = editUsuarioLogin.getText().toString().trim();
+                String senha = editUsuarioSenha.getText().toString().trim();
+                String senhaConfirmar = editUsuarioSenhaConfirmar.getText().toString().trim();
+
+                Usuario usuario = new Usuario(login,senha);
+                Pessoa pessoa = new Pessoa(usuario,nome,cpf);
+
+                cadastro(pessoa, senhaConfirmar);
+
+            }
+        });
+    }
+
+    public void cadastro(Pessoa pessoa,String confirmarSenha){
+
+                    if(!validarCadastroActivity(pessoa.getNome(),pessoa.getCpf(),pessoa.getUsuario().getLogin(),pessoa.getUsuario().getSenha(),confirmarSenha)){
+                        return;
+                    }
+
+                    try{
+                        usuarioNegocio.validarCadastro(pessoa,confirmarSenha);
+                        finish();
+//                        Intent intentGoLogin = new Intent(CadastroActivity.this, LoginActivity.class);
+//                        startActivity(intentGoLogin);
+                    }catch (Exception e){
+                        GuiUtil.showMessage(CadastroActivity.this,e.getMessage());
+                    }
+
+
+    }
+
+    public boolean validarCadastroActivity( String nome, String cpf, String login, String senha, String confirmarSenha){
+
+        if((nome == null || nome.equals(""))&&(cpf == null || cpf.equals(""))&&(login==null || login.equals(""))&&(senha==null || senha.equals(""))&&(confirmarSenha==null || confirmarSenha.equals(""))) {
+            GuiUtil.showError(editPessoaNome, "Insira o nome");
+            GuiUtil.showError(editPessoaCPF, "Insira o CPF");
+            GuiUtil.showError(editUsuarioLogin, "Insira o Login");
+            GuiUtil.showError(editUsuarioSenha, "Insira a senha");
+            GuiUtil.showError(editUsuarioSenhaConfirmar, "Confirme a senha");
+            return false;
+        }else if(nome == null || nome.equals("")){
+            GuiUtil.showError(editPessoaNome, "Insira o nome");
+            return false;
+        }else if(cpf == null || cpf.equals("")){
+            GuiUtil.showError(editPessoaCPF, "Insira o CPF");
+            return false;
+        }else if (login==null || login.equals("")){
+            GuiUtil.showError(editUsuarioLogin, "Insira o login");
+            return false;
+        }else if(senha==null || senha.equals("")){
+            GuiUtil.showError(editUsuarioSenha, "Insira a senha");
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -24,12 +120,8 @@ public class CadastroActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }

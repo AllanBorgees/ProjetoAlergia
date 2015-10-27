@@ -18,16 +18,16 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Remédio"
+        android:hint="CPF"
         android:singleLine="true"
         android:layout_below="@id/edtNomePessoa"
         android:layout_marginTop="20dp"
-        android:id="@+id/edtRemedio"/>
+        android:id="@+id/edtCpf"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/edtRemedio"
+        android:layout_below="@id/edtCpf"
         android:singleLine="true"
         android:id="@+id/edtLoginCadastro"
         android:layout_marginTop="20dp"

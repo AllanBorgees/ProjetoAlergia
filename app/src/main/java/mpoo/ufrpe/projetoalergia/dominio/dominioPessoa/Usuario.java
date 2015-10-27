@@ -6,6 +6,14 @@ public class Usuario {
     private int id;
     private String senha;
 
+    public Usuario(String login, String senha) {
+        this.login = login;
+        this.senha = senha;
+    }
+    public Usuario(){
+
+    }
+
     public String getLogin() {
         return login;
     }

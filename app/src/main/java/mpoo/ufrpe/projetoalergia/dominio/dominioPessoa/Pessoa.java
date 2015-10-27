@@ -17,6 +17,16 @@ public class Pessoa {
     private String cpf;
     private List<Remedio> remedio;
 
+    public Pessoa(Usuario usuario, String nome, String cpf) {
+        this.usuario = usuario;
+        this.nome = nome;
+        this.cpf = cpf;
+    }
+
+    public Pessoa(){
+
+    }
+
     public Usuario getUsuario() {
         return usuario;
     }

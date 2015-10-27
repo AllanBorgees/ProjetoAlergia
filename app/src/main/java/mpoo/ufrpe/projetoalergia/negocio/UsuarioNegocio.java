@@ -36,22 +36,22 @@ public class UsuarioNegocio {
         }
     }
 
-    public void validarCadastro(Pessoa pessoa) throws Exception{
+    public void validarCadastro(Pessoa pessoa, String confirmarSenha) throws Exception{
+
         Usuario usuario = dao.buscarUsuario(pessoa.getUsuario().getLogin());
         StringBuilder builder = new StringBuilder();
 
         if (usuario != null){
             builder.append("Esse usuario já está cadastrado");
-        } else {
+
+        }else if(!pessoa.getUsuario().getSenha().equals(confirmarSenha)) {
+            builder.append("Senha não confere");
+        }else{
             dao.cadastrarUsuario(pessoa);
         }
-
-
-
         if (builder.length() > 0){
             throw new Exception(builder.toString());
         }
-
     }
 
 
@@ -64,8 +64,8 @@ public class UsuarioNegocio {
         }
     }
 
-    public void inserirUsuario(){
-        dao.inserirUsuario();
+    public void inserirUsuario(Pessoa pessoa){
+        dao.cadastrarUsuario(pessoa);
     }
 
 }

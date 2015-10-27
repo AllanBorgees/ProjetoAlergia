@@ -8,7 +8,17 @@ import java.util.List;
 public class Remedio {
 
     private String nome;
+    private String fabricante;
     private List<Componente> componentes;
+
+
+    public String getFabricante() {
+        return fabricante;
+    }
+
+    public void setFabricante(String fabricante) {
+        this.fabricante = fabricante;
+    }
 
     public String getNome() {
         return nome;

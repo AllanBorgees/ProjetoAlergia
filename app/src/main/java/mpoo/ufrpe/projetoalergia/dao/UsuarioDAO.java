@@ -23,8 +23,9 @@ public class UsuarioDAO {
     public Usuario buscarUsuario(String login){
         Usuario usuario = null;
         db = helper.getWritableDatabase();
+
         Cursor cursor = db.rawQuery("SELECT * FROM " + Helper.TABELA_USUARIO +
-                " WHERE " + Helper.USUARIO_LOGIN + " = ?", new String[]{login});
+                " WHERE " + Helper.USUARIO_LOGIN + " =?", new String[]{login});
         if (cursor.moveToFirst()){
             usuario = new Usuario();
             usuario.setId(cursor.getInt(0));
@@ -34,24 +35,30 @@ public class UsuarioDAO {
         db.close();
         return usuario;
     }
+
     public void cadastrarUsuario(Pessoa pessoa){
-//        db = helper.getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//        values.put(Helper.USUARIO_LOGIN, pessoa.getUsuario().getLogin());
-//        values.put(Helper.USUARIO_SENHA, pessoa.getUsuario().getLogin());
-//        db.insert(Helper.TABELA_USUARIO, null, values);
-//        db.close();
-    }
-
-
-
-    public void inserirUsuario(){
         db = helper.getWritableDatabase();
-        db.execSQL("INSERT INTO " + Helper.TABELA_USUARIO + "("+Helper.USUARIO_LOGIN+","+Helper.USUARIO_SENHA +") VALUES ('allan', '123') ");
-        db.execSQL("INSERT INTO " + Helper.TABELA_USUARIO + "("+Helper.USUARIO_LOGIN+","+Helper.USUARIO_SENHA +") VALUES ('joao', '123') ");
-        db.execSQL("INSERT INTO " + Helper.TABELA_USUARIO + "("+Helper.USUARIO_LOGIN+","+Helper.USUARIO_SENHA +") VALUES ('carlos', '123') ");
-        db.execSQL("INSERT INTO " + Helper.TABELA_USUARIO + "("+Helper.USUARIO_LOGIN+","+Helper.USUARIO_SENHA +") VALUES ('airton', '123') ");
-        db.execSQL("INSERT INTO " + Helper.TABELA_USUARIO + "("+Helper.USUARIO_LOGIN+","+Helper.USUARIO_SENHA +") VALUES ('stefanie', '123') ");
+        ContentValues values = new ContentValues();
+        values.put(Helper.PESSOA_NOME, pessoa.getNome());
+        values.put(Helper.PESSOA_CPF, pessoa.getCpf());
+        db.insert(Helper.TABELA_PESSOA, null, values);
+        values = new ContentValues();
+        values.put(Helper.USUARIO_LOGIN, pessoa.getUsuario().getLogin());
+        values.put(Helper.USUARIO_SENHA, pessoa.getUsuario().getSenha());
+        db.insert(Helper.TABELA_USUARIO, null, values);
+
+        db.close();
+
     }
+
+
+//    public void inserirUsuario(){
+//        db = helper.getWritableDatabase();
+//        db.execSQL("INSERT INTO " + Helper.TABELA_USUARIO + "("+Helper.USUARIO_LOGIN+","+Helper.USUARIO_SENHA +") VALUES ('allan', '123') ");
+//        db.execSQL("INSERT INTO " + Helper.TABELA_USUARIO + "("+Helper.USUARIO_LOGIN+","+Helper.USUARIO_SENHA +") VALUES ('joao', '123') ");
+//        db.execSQL("INSERT INTO " + Helper.TABELA_USUARIO + "("+Helper.USUARIO_LOGIN+","+Helper.USUARIO_SENHA +") VALUES ('carlos', '123') ");
+//        db.execSQL("INSERT INTO " + Helper.TABELA_USUARIO + "("+Helper.USUARIO_LOGIN+","+Helper.USUARIO_SENHA +") VALUES ('airton', '123') ");
+//        db.execSQL("INSERT INTO " + Helper.TABELA_USUARIO + "("+Helper.USUARIO_LOGIN+","+Helper.USUARIO_SENHA +") VALUES ('stefanie', '123') ");
+//    }
 
 }
