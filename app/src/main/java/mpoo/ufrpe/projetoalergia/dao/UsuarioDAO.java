@@ -41,10 +41,14 @@ public class UsuarioDAO {
         ContentValues values = new ContentValues();
         values.put(Helper.PESSOA_NOME, pessoa.getNome());
         values.put(Helper.PESSOA_CPF, pessoa.getCpf());
+        Integer fk_id_pessoa = Integer.parseInt(Helper.PESSOA_ID);
+
         db.insert(Helper.TABELA_PESSOA, null, values);
+
         values = new ContentValues();
         values.put(Helper.USUARIO_LOGIN, pessoa.getUsuario().getLogin());
         values.put(Helper.USUARIO_SENHA, pessoa.getUsuario().getSenha());
+        values.put(Helper.USUARIO_PESSOA_ID,fk_id_pessoa);
         db.insert(Helper.TABELA_USUARIO, null, values);
 
         db.close();
