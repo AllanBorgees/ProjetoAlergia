@@ -3,6 +3,7 @@ package mpoo.ufrpe.projetoalergia.dao;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import mpoo.ufrpe.projetoalergia.dominio.dominioPessoa.Pessoa;
 import mpoo.ufrpe.projetoalergia.dominio.dominioPessoa.Usuario;
@@ -41,9 +42,8 @@ public class UsuarioDAO {
         ContentValues values = new ContentValues();
         values.put(Helper.PESSOA_NOME, pessoa.getNome());
         values.put(Helper.PESSOA_CPF, pessoa.getCpf());
-        Integer fk_id_pessoa = Integer.parseInt(Helper.PESSOA_ID);
 
-        db.insert(Helper.TABELA_PESSOA, null, values);
+        long fk_id_pessoa = db.insert(Helper.TABELA_PESSOA, null, values);
 
         values = new ContentValues();
         values.put(Helper.USUARIO_LOGIN, pessoa.getUsuario().getLogin());

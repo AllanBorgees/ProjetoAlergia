@@ -9,7 +9,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+
+
+import java.util.InputMismatchException;
 
 import mpoo.ufrpe.projetoalergia.R;
 import mpoo.ufrpe.projetoalergia.dominio.dominioPessoa.Pessoa;
@@ -45,6 +47,10 @@ public class CadastroActivity extends AppCompatActivity {
         editUsuarioSenhaConfirmar = (EditText) findViewById(R.id.edtConfirmarSenhaCadastro);
 
 
+
+//        MaskEditTextChangedListener maskCPF = new MaskEditTextChangedListener("###.###.###-##", cpf);
+
+
         btnCadastrar = (Button) findViewById(R.id.btnCadastrarCadastro);
 
 
@@ -54,6 +60,7 @@ public class CadastroActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 String nome = editPessoaNome.getText().toString().trim();
+
                 String cpf = editPessoaCPF.getText().toString().trim();
                 String login = editUsuarioLogin.getText().toString().trim();
                 String senha = editUsuarioSenha.getText().toString().trim();
@@ -70,10 +77,9 @@ public class CadastroActivity extends AppCompatActivity {
 
     public void cadastro(Pessoa pessoa,String confirmarSenha){
 
-                    if(!validarCadastroActivity(pessoa.getNome(),pessoa.getCpf(),pessoa.getUsuario().getLogin(),pessoa.getUsuario().getSenha(),confirmarSenha)){
+                    if(!validarCadastroVazioActivity(pessoa.getNome(),pessoa.getCpf(),pessoa.getUsuario().getLogin(),pessoa.getUsuario().getSenha(),confirmarSenha)){
                         return;
                     }
-
                     try{
                         usuarioNegocio.validarCadastro(pessoa,confirmarSenha);
                         finish();
@@ -86,7 +92,7 @@ public class CadastroActivity extends AppCompatActivity {
 
     }
 
-    public boolean validarCadastroActivity( String nome, String cpf, String login, String senha, String confirmarSenha){
+    public boolean validarCadastroVazioActivity( String nome, String cpf, String login, String senha, String confirmarSenha){
 
         if((nome == null || nome.equals(""))&&(cpf == null || cpf.equals(""))&&(login==null || login.equals(""))&&(senha==null || senha.equals(""))&&(confirmarSenha==null || confirmarSenha.equals(""))) {
             GuiUtil.showError(editPessoaNome, "Insira o nome");
@@ -110,6 +116,20 @@ public class CadastroActivity extends AppCompatActivity {
         }
         return true;
     }
+
+
+
+
+
+
+
+    public String imprimeCPF(String CPF) {
+        return(CPF.substring(0, 3) + "." + CPF.substring(3, 6) + "." + CPF.substring(6, 9) + "-" + CPF.substring(9, 11));
+    }
+
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
