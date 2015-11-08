@@ -2,18 +2,18 @@ package mpoo.ufrpe.projetoalergia.gui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import mpoo.ufrpe.projetoalergia.R;
 import mpoo.ufrpe.projetoalergia.negocio.UsuarioNegocio;
+import mpoo.ufrpe.projetoalergia.negocio.infra.ProjetoAlergiaException;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -33,12 +33,15 @@ public class LoginActivity extends AppCompatActivity {
 
         contexto = this;
         usuarioNegocio = UsuarioNegocio.getInstancia();
-        //usuarioNegocio.inserirUsuario();
         editTextLogin = (EditText) findViewById(R.id.edtLogin);
         editTextSenha = (EditText) findViewById(R.id.edtSenha);
         img = (ImageView) findViewById(R.id.img);
         btnLogar = (Button) findViewById(R.id.btnLogar);
         btnCadastrar = (Button) findViewById(R.id.btnCadastrar);
+
+
+
+
 
 
 
@@ -67,13 +70,12 @@ public class LoginActivity extends AppCompatActivity {
             return ;
 
         try {
-            usuarioNegocio.validarString(login);
             usuarioNegocio.fazerLogin(login,senha);
             finish();
             Intent intentGoMain = new Intent(LoginActivity.this, PesquisaActivity.class);
             startActivity(intentGoMain);
             GuiUtil.showMessage(LoginActivity.this,"Login efetuado");
-        } catch (Exception e){
+        } catch (ProjetoAlergiaException e){
             GuiUtil.showMessage(LoginActivity.this,e.getMessage());
         }
 
@@ -102,6 +104,7 @@ public class LoginActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     public boolean validarLoginActivity(String login, String senha){
 
         if((login==null || login.equals(""))&&(senha==null || senha.equals(""))){
@@ -124,4 +127,7 @@ public class LoginActivity extends AppCompatActivity {
     public static Context getContexto() {
         return contexto;
     }
+
+
+    
 }

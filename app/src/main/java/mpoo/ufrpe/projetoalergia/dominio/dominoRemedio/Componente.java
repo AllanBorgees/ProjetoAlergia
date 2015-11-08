@@ -6,6 +6,7 @@ package mpoo.ufrpe.projetoalergia.dominio.dominoRemedio;
 
 public class Componente {
 
+    private  int id;
     private float peso;
     private String nome;
 
@@ -24,4 +25,20 @@ public class Componente {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String toString()
+    {
+        return nome +"        "+peso;
+
+
+    }
 }
+

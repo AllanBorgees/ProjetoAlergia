@@ -12,7 +12,6 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -24,6 +23,12 @@
             android:name=".gui.CadastroActivity"
             android:label="@string/title_activity_cadastro" >
         </activity>
+        <activity
+            android:name=".gui.PerfilRemedioActivity"
+            android:label="@string/title_activity_perfil_remedio" >
+        </activity>
+
+
     </application>
 
 </manifest>

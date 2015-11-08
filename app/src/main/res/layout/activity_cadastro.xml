@@ -18,7 +18,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="CPF  xxx.xxx.xxx-xx"
+        android:hint="CPF"
         android:singleLine="true"
         android:layout_below="@id/edtNomePessoa"
         android:layout_marginTop="20dp"
@@ -27,11 +27,26 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/edtCpf"
+        android:hint="Data De Nascimento"
+        android:singleLine="true"
+        android:layout_below="@+id/edtCpf"
+        android:layout_marginTop="20dp"
+        android:id="@+id/edtDataDeNascimentoCadastro"
+
+        />
+
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edtDataDeNascimentoCadastro"
         android:singleLine="true"
         android:id="@+id/edtLoginCadastro"
         android:layout_marginTop="20dp"
         android:hint="Login"/>
+
+
 
     <EditText
         android:layout_width="match_parent"

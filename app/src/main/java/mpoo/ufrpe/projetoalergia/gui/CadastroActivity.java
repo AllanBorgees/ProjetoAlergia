@@ -1,22 +1,28 @@
 package mpoo.ufrpe.projetoalergia.gui;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 
-
-import java.util.InputMismatchException;
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import mpoo.ufrpe.projetoalergia.R;
 import mpoo.ufrpe.projetoalergia.dominio.dominioPessoa.Pessoa;
 import mpoo.ufrpe.projetoalergia.dominio.dominioPessoa.Usuario;
 import mpoo.ufrpe.projetoalergia.negocio.UsuarioNegocio;
+import mpoo.ufrpe.projetoalergia.negocio.infra.Util;
 
 public class CadastroActivity extends AppCompatActivity {
 
@@ -25,11 +31,12 @@ public class CadastroActivity extends AppCompatActivity {
     private EditText editUsuarioLogin;
     private EditText editUsuarioSenha;
     private EditText editUsuarioSenhaConfirmar;
+    private EditText edtPessoaDataDeNascimentoCadastro;
+    private Date dataNascimento;
+
     private Button btnCadastrar;
     private UsuarioNegocio usuarioNegocio;
     private static Context contexto;
-
-
 
 
     @Override
@@ -45,14 +52,16 @@ public class CadastroActivity extends AppCompatActivity {
         editUsuarioLogin= (EditText) findViewById(R.id.edtLoginCadastro);
         editUsuarioSenha = (EditText) findViewById(R.id.edtSenhaCadastro);
         editUsuarioSenhaConfirmar = (EditText) findViewById(R.id.edtConfirmarSenhaCadastro);
+        edtPessoaDataDeNascimentoCadastro = (EditText) findViewById(R.id.edtDataDeNascimentoCadastro);
 
-
-
-//        MaskEditTextChangedListener maskCPF = new MaskEditTextChangedListener("###.###.###-##", cpf);
 
 
         btnCadastrar = (Button) findViewById(R.id.btnCadastrarCadastro);
 
+
+        ExibeDataListerner listerner = new ExibeDataListerner();
+        edtPessoaDataDeNascimentoCadastro.setOnClickListener(listerner);
+        edtPessoaDataDeNascimentoCadastro.setOnFocusChangeListener(listerner);
 
 
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
@@ -65,10 +74,10 @@ public class CadastroActivity extends AppCompatActivity {
                 String login = editUsuarioLogin.getText().toString().trim();
                 String senha = editUsuarioSenha.getText().toString().trim();
                 String senhaConfirmar = editUsuarioSenhaConfirmar.getText().toString().trim();
+                String dataDeNascimento = edtPessoaDataDeNascimentoCadastro.getText().toString().trim();
 
                 Usuario usuario = new Usuario(login,senha);
-                Pessoa pessoa = new Pessoa(usuario,nome,cpf);
-
+                Pessoa pessoa = new Pessoa(usuario,nome,cpf,dataNascimento);
                 cadastro(pessoa, senhaConfirmar);
 
             }
@@ -77,14 +86,18 @@ public class CadastroActivity extends AppCompatActivity {
 
     public void cadastro(Pessoa pessoa,String confirmarSenha){
 
-                    if(!validarCadastroVazioActivity(pessoa.getNome(),pessoa.getCpf(),pessoa.getUsuario().getLogin(),pessoa.getUsuario().getSenha(),confirmarSenha)){
+                    if(!validarCadastroVazioActivity(pessoa,confirmarSenha)){
+                        return;
+                    }
+                    if(!validarCampoCpf(pessoa.getCpf())){
                         return;
                     }
                     try{
                         usuarioNegocio.validarCadastro(pessoa,confirmarSenha);
                         finish();
-//                        Intent intentGoLogin = new Intent(CadastroActivity.this, LoginActivity.class);
-//                        startActivity(intentGoLogin);
+                        Intent intentGoLogin = new Intent(CadastroActivity.this, LoginActivity.class);
+                        startActivity(intentGoLogin);
+                        GuiUtil.showMessage(CadastroActivity.this,"Usuário cadastrado");
                     }catch (Exception e){
                         GuiUtil.showMessage(CadastroActivity.this,e.getMessage());
                     }
@@ -92,46 +105,67 @@ public class CadastroActivity extends AppCompatActivity {
 
     }
 
-    public boolean validarCadastroVazioActivity( String nome, String cpf, String login, String senha, String confirmarSenha){
+       public boolean validarCadastroVazioActivity( Pessoa pessoa , String confirmarSenha){
+        if((pessoa.getNome() == null || pessoa.getNome().equals(""))&&(pessoa.getCpf() == null || pessoa.getCpf().equals(""))&&(pessoa.getUsuario().getLogin()==null
+                || pessoa.getUsuario().getLogin().equals(""))&&(pessoa.getUsuario().getSenha()==null || pessoa.getUsuario().getSenha().equals(""))&&(confirmarSenha==null ||
+                confirmarSenha.equals("")) && (pessoa.getDataDeNascimento()==null)) {
 
-        if((nome == null || nome.equals(""))&&(cpf == null || cpf.equals(""))&&(login==null || login.equals(""))&&(senha==null || senha.equals(""))&&(confirmarSenha==null || confirmarSenha.equals(""))) {
             GuiUtil.showError(editPessoaNome, "Insira o nome");
             GuiUtil.showError(editPessoaCPF, "Insira o CPF");
             GuiUtil.showError(editUsuarioLogin, "Insira o Login");
             GuiUtil.showError(editUsuarioSenha, "Insira a senha");
             GuiUtil.showError(editUsuarioSenhaConfirmar, "Confirme a senha");
+            GuiUtil.showError(edtPessoaDataDeNascimentoCadastro,"Selecione a data de nascimento");
             return false;
-        }else if(nome == null || nome.equals("")){
+        }else if(pessoa.getNome() == null || pessoa.getNome().equals("")){
             GuiUtil.showError(editPessoaNome, "Insira o nome");
             return false;
-        }else if(cpf == null || cpf.equals("")){
+        }else if(pessoa.getCpf() == null || pessoa.getCpf().equals("")) {
             GuiUtil.showError(editPessoaCPF, "Insira o CPF");
             return false;
-        }else if (login==null || login.equals("")){
+        }else if(pessoa.getDataDeNascimento()==null){
+            GuiUtil.showError(edtPessoaDataDeNascimentoCadastro,"Selecione a data de nascimento");
+            return false;
+        }else if (pessoa.getUsuario().getLogin()==null || pessoa.getUsuario().getLogin().equals("")){
             GuiUtil.showError(editUsuarioLogin, "Insira o login");
             return false;
-        }else if(senha==null || senha.equals("")){
+        }else if(pessoa.getUsuario().getSenha()==null || pessoa.getUsuario().getSenha().equals("")){
             GuiUtil.showError(editUsuarioSenha, "Insira a senha");
             return false;
         }
         return true;
     }
 
+    public boolean validarCampoCpf(String cpf) {
 
+        if (cpf.length() != 11) {
+            GuiUtil.showError(editPessoaCPF, "O CPF deve conter apenas 11 digitos!");
+            return false;
 
+        }
+        if (cpf == "00000000000" || cpf.equals("00000000000")||cpf == "11111111111" || cpf.equals("11111111111") ||
+                cpf == "22222222222" || cpf.equals("22222222222") || cpf == "33333333333" || cpf.equals("33333333333") ||
+                cpf == "44444444444" || cpf.equals("44444444444") || cpf == "55555555555" || cpf.equals("55555555555")
+                ||cpf == "66666666666" || cpf.equals("66666666666") || cpf == "77777777777" || cpf.equals("77777777777")
+                ||cpf == "88888888888" || cpf.equals("99999999999")){
+            GuiUtil.showError(editPessoaCPF, "CPF invalido");
+            return false;
+        }
 
+        Pattern pattern = Pattern.compile("\\d{11}");
+        Matcher matcher = pattern.matcher(cpf);
+        if(!matcher.find()) {
+            GuiUtil.showError(editPessoaCPF, "O CPF deve conter apenas numeros!");
+            return false;
+        }
 
-
-
-    public String imprimeCPF(String CPF) {
-        return(CPF.substring(0, 3) + "." + CPF.substring(3, 6) + "." + CPF.substring(6, 9) + "-" + CPF.substring(9, 11));
+//        if(matcher.find() && cpf.length() != 11) {
+//            return false;
+//        }
+        return true;
     }
 
 
-
-
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_cadastro, menu);
@@ -148,4 +182,46 @@ public class CadastroActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    private void exibeData() {
+        Calendar calendar= Calendar.getInstance();
+
+        int ano = calendar.get(Calendar.YEAR);
+        int mes = calendar.get(Calendar.MONTH);
+        int dia = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog dlg = new DatePickerDialog(this,new SelecionaDataListener(), ano, mes, dia);
+        dlg.show();
+
+    }
+    private class ExibeDataListerner implements View.OnClickListener, View.OnFocusChangeListener
+    {
+        @Override
+        public void onClick(View v) {
+            exibeData();
+        }
+        @Override
+        public void onFocusChange(View v, boolean hasFocus) {
+            if(hasFocus)
+                exibeData();
+        }
+    }
+    private class SelecionaDataListener implements DatePickerDialog.OnDateSetListener
+    {
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+            Calendar data = Calendar.getInstance();
+
+            data.set(year, monthOfYear, dayOfMonth);
+
+             dataNascimento = data.getTime();
+
+            DateFormat format = DateFormat.getDateInstance(DateFormat.SHORT);
+            String dt = format.format(dataNascimento);
+
+            edtPessoaDataDeNascimentoCadastro.setText(dt);
+        }
+    }
+
 }

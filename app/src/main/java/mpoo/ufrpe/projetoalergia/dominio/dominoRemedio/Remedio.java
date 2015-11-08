@@ -1,5 +1,7 @@
 package mpoo.ufrpe.projetoalergia.dominio.dominoRemedio;
 
+import android.widget.ArrayAdapter;
+
 import java.util.List;
 
 /**
@@ -7,6 +9,7 @@ import java.util.List;
  */
 public class Remedio {
 
+    private int id;
     private String nome;
     private String fabricante;
     private List<Componente> componentes;
@@ -32,7 +35,22 @@ public class Remedio {
         return componentes;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void setComponentes(List<Componente> componentes) {
         this.componentes = componentes;
+    }
+
+    public String toString()
+    {
+        return nome +"      "+fabricante;
+
+
     }
 }
