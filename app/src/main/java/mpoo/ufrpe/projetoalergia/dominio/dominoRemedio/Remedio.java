@@ -1,7 +1,5 @@
 package mpoo.ufrpe.projetoalergia.dominio.dominoRemedio;
 
-import android.widget.ArrayAdapter;
-
 import java.util.List;
 
 /**
@@ -13,6 +11,7 @@ public class Remedio {
     private String nome;
     private String fabricante;
     private List<Componente> componentes;
+    private int idIcone;
 
 
     public String getFabricante() {
@@ -45,6 +44,14 @@ public class Remedio {
 
     public void setComponentes(List<Componente> componentes) {
         this.componentes = componentes;
+    }
+
+    public int getIdIcone() {
+        return idIcone;
+    }
+
+    public void setIdIcone(int idIcone) {
+        this.idIcone = idIcone;
     }
 
     public String toString()

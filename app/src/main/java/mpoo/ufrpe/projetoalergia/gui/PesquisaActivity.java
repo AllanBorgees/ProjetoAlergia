@@ -15,10 +15,10 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import mpoo.ufrpe.projetoalergia.R;
+import mpoo.ufrpe.projetoalergia.dominio.dominoRemedio.RemedioDTO;
 import mpoo.ufrpe.projetoalergia.negocio.RemedioNegocio;
 
 public class PesquisaActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
@@ -28,6 +28,7 @@ public class PesquisaActivity extends AppCompatActivity implements View.OnClickL
     private RemedioNegocio remedioNegocio;
     private ListView lstRemedio;
     private EditText edtPesquisa;
+    private AdapterListRemedio adapterListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,11 +89,11 @@ public class PesquisaActivity extends AppCompatActivity implements View.OnClickL
 
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        String remedio = adpRemedio.getItem(position);
+        RemedioDTO remedioDTO = adapterListView.getItem(position);
 
         Intent it = new Intent(this, PerfilRemedioActivity.class);
 
-        it.putExtra("REMEDIO", remedio);
+        it.putExtra("REMEDIO",remedioDTO.getId());
         setResult(Activity.RESULT_OK, it);
 
         startActivityForResult(it, 0);
@@ -113,12 +114,13 @@ public class PesquisaActivity extends AppCompatActivity implements View.OnClickL
     public void autoComplete(){
         String nome = edtPesquisa.getText().toString();
         if (nome.length() == 0) {
-            adpRemedio = null;
+            adapterListView = null;
         } else {
-            List<String> listaRemedio = remedioNegocio.consultarRemedio(nome);
-            adpRemedio = new ArrayAdapter<String>(PesquisaActivity.getContexto(), android.R.layout.simple_list_item_1,listaRemedio);
+            List<RemedioDTO> listaRemedio = remedioNegocio.consultarRemedio(nome);
+//            adpRemedio = new ArrayAdapter<String>(PesquisaActivity.getContexto(), android.R.layout.simple_list_item_1,listaRemedio);
+            adapterListView = new AdapterListRemedio(this,listaRemedio);
         }
-        lstRemedio.setAdapter(adpRemedio);
+        lstRemedio.setAdapter(adapterListView);
 
     }
 

@@ -1,13 +1,16 @@
 package mpoo.ufrpe.projetoalergia.dominio.dominoRemedio;
 
+import java.text.Collator;
+import java.util.Locale;
+
 /**
  * Created by Allan on 16/10/2015.
  */
 
-public class Componente {
+public class Componente implements Comparable<Componente> {
 
-    private  int id;
-    private float peso;
+    private int id;
+    private Float peso;
     private String nome;
 
     public float getPeso() {
@@ -34,11 +37,20 @@ public class Componente {
         this.id = id;
     }
 
-    public String toString()
-    {
-        return nome +"        "+peso;
+    public String toString() {
+        return nome + "        " + peso;
+    }
 
+    @Override
+    public int compareTo(Componente componente) {
+        Collator cot = Collator.getInstance(new Locale("pt", "BR"));
+        if (componente != null) {
+            return cot.compare(this.getNome(),componente.getNome());
+        } else {
+            return 0;
+        }
 
     }
+
 }
 

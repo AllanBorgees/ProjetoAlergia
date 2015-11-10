@@ -3,6 +3,7 @@ package mpoo.ufrpe.projetoalergia.gui;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -22,7 +24,6 @@ import mpoo.ufrpe.projetoalergia.R;
 import mpoo.ufrpe.projetoalergia.dominio.dominioPessoa.Pessoa;
 import mpoo.ufrpe.projetoalergia.dominio.dominioPessoa.Usuario;
 import mpoo.ufrpe.projetoalergia.negocio.UsuarioNegocio;
-import mpoo.ufrpe.projetoalergia.negocio.infra.Util;
 
 public class CadastroActivity extends AppCompatActivity {
 
@@ -62,6 +63,8 @@ public class CadastroActivity extends AppCompatActivity {
         ExibeDataListerner listerner = new ExibeDataListerner();
         edtPessoaDataDeNascimentoCadastro.setOnClickListener(listerner);
         edtPessoaDataDeNascimentoCadastro.setOnFocusChangeListener(listerner);
+
+
 
 
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
@@ -159,9 +162,7 @@ public class CadastroActivity extends AppCompatActivity {
             return false;
         }
 
-//        if(matcher.find() && cpf.length() != 11) {
-//            return false;
-//        }
+
         return true;
     }
 
@@ -221,6 +222,23 @@ public class CadastroActivity extends AppCompatActivity {
             String dt = format.format(dataNascimento);
 
             edtPessoaDataDeNascimentoCadastro.setText(dt);
+        }
+    }
+
+    public void tirarFoto(View view){
+        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+        startActivityForResult(intent, 0);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(data != null){
+            Bundle bundle = data.getExtras();
+            if(bundle != null){
+                Bitmap img = (Bitmap) bundle.get("data");
+
+                ImageView iv = (ImageView) findViewById(R.id.imageView);
+                iv.setImageBitmap(img);
+            }
         }
     }
 

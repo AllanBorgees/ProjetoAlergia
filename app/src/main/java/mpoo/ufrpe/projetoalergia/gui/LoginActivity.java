@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,13 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         img = (ImageView) findViewById(R.id.img);
         btnLogar = (Button) findViewById(R.id.btnLogar);
         btnCadastrar = (Button) findViewById(R.id.btnCadastrar);
-
-
-
-
-
-
-
+        Log.i("ID da foto", String.valueOf(R.drawable.images));
         btnLogar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

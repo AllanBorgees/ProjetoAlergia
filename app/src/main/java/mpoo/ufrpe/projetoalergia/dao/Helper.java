@@ -37,6 +37,7 @@ public class Helper extends SQLiteOpenHelper {
     public static final String REMEDIO_ID = "_id_remedio";
     public static final String REMEDIO_NOME = "nome_remedio";
     public static final String REMEDIO_FABRICANTE = "fabricante_remedio";
+    public static final String REMEDIO_ID_ICONE = "id_icone_remedio";
 
     public static final String TABELA_COMPONENTE = "tabela_componente";
     public static final String COMPONENTE_ID = "_id_componente";
@@ -91,7 +92,8 @@ public class Helper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE "+ TABELA_REMEDIO + "(" +
                 REMEDIO_ID + " integer primary key autoincrement, " +
                 REMEDIO_NOME+ " text not null, "+
-                REMEDIO_FABRICANTE+ " text not null);");
+                REMEDIO_FABRICANTE+ " text not null, "+
+                REMEDIO_ID_ICONE+" int not null);");
 
         db.execSQL("CREATE TABLE "+ TABELA_COMPONENTE + "(" +
                 COMPONENTE_ID + " integer primary key autoincrement, " +
@@ -105,7 +107,12 @@ public class Helper extends SQLiteOpenHelper {
                 +"foreign key (" +COMPONENTE_ID + ") references "+ TABELA_COMPONENTE+" ("+COMPONENTE_ID+"), "
                         +"foreign key (" +REMEDIO_ID+ ") references "+ TABELA_REMEDIO+" ("+REMEDIO_ID+"));");
 
-
+        db.execSQL("INSERT INTO " + TABELA_USUARIO + "("+USUARIO_LOGIN+","+USUARIO_SENHA +") VALUES ('allan', 'allan') ");
+        db.execSQL("INSERT INTO " + TABELA_USUARIO + "("+USUARIO_LOGIN+","+USUARIO_SENHA +") VALUES ('airton', 'airton') ");
+        db.execSQL("INSERT INTO " + TABELA_USUARIO + "("+USUARIO_LOGIN+","+USUARIO_SENHA +") VALUES ('stefany', 'stefany') ");
+        db.execSQL("INSERT INTO " + TABELA_USUARIO + "("+USUARIO_LOGIN+","+USUARIO_SENHA +") VALUES ('joao', 'joao') ");
+        db.execSQL("INSERT INTO " + TABELA_USUARIO + "("+USUARIO_LOGIN+","+USUARIO_SENHA +") VALUES ('carlos', 'carlos') ");
+        db.execSQL("INSERT INTO " + TABELA_USUARIO + "("+USUARIO_LOGIN+","+USUARIO_SENHA +") VALUES ('gabriel', 'gabriel') ");
 //        db.execSQL("INSERT INTO " + TABELA_USUARIO + "("+USUARIO_LOGIN+","+USUARIO_SENHA +") VALUES ('allan', '123') ");
 ////        db.execSQL("INSERT INTO " + TABELA_USUARIO + "("+USUARIO_LOGIN+","+USUARIO_SENHA +") VALUES ('joao', '123') ");
 //
@@ -124,25 +131,27 @@ public class Helper extends SQLiteOpenHelper {
 //        db.execSQL("SELECT * FROM "+TABELA_REMEDIO_COMPONENTE+" INNER JOIN "+TABELA_COMPONENTE+" ON ("+TABELA_REMEDIO_COMPONENTE+"."+COMPONETE_FK_ID+" = "+
 //                TABELA_COMPONENTE+"."+COMPONENTE_ID+") INNER JOIN "+TABELA_REMEDIO+" ON ("+TABELA_REMEDIO_COMPONENTE+"."+REMEDIO_FK_ID+" = "+TABELA_REMEDIO+"."+REMEDIO_ID+")");
 
-        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE + ") VALUES ('ASS 100mg','Sanofi-Aventis Farmacêutica Ltda')");
-        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE + ") VALUES ('ADVI 200mg','WYETH INDÚSTRIA FARMACÊUTICA LTDA')");
-        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE + ") VALUES ('ANADOR 500mg','Boehringer Ingelheim do Brasil Química e Farmacêutica LTDA')");
-        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE + ") VALUES ('ATROVERAN COMPOSTO','Cosmed Indústria de Cosméticos e Medicamentos S.A.')");
-        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE + ") VALUES ('BUSCOPAN COMPOSTO','Boehringer Ingelheim do Brasil Química e Farmacêutica Ltda.')");
-        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE + ") VALUES ('Cataflam D','Novartis Biociências SA')");
-        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE + ") VALUES ('CORISTINA® D','Cosmed Indústria de Cosméticos e Medicamentos S.A.')");
-        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE + ") VALUES ('diclofenaco resinato','LABORATÓRIO TEUTO BRASILEIRO S/A.')");
-        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE + ") VALUES ('IBUPROFENO 50mg/mL','Brainfarma Indústria Química e Farmacêutica S.A.')");
-        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE + ") VALUES ('DIPIRONA SÓDICA 500mg/mL','Geolab Indústria Farmacêutica S/A')");
-        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE + ") VALUES ('DORFLEX','Sanofi-Aventis Farmacêutica Ltda.')");
-        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE + ") VALUES ('EXCEDRIN','Novartis Biociências S.A.')");
-        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE + ") VALUES ('TYLENOL 500mg','Janssen-Cilag Farmacêutica Ltda.')");
-        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE + ") VALUES ('TYLENOL 750mg','Janssen-Cilag Farmacêutica Ltda.')");
-        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE + ") VALUES ('NEOSALDINA','Takeda Pharma Ltda.')");
-        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE + ") VALUES ('PARACETAMOL','Medley Indústria Farmacêutica Ltda.')");
-        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE + ") VALUES ('Sonrisal','GlaxoSmithKline')");
-        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE + ") VALUES ('Sonrisal® Limão','GlaxoSmithKline')");
-        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE + ") VALUES ('TORSILAX®','Brainfarma Indústria Química e Farmacêutica S.A.')");
+        //      2130837566
+
+        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE +","+REMEDIO_ID_ICONE+ ") VALUES ('ASS 100mg','Sanofi-Aventis Farmacêutica Ltda','2130837567')");
+        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE +","+REMEDIO_ID_ICONE+ ") VALUES ('ADVI 200mg','WYETH INDÚSTRIA FARMACÊUTICA LTDA','2130837567')");
+        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE +","+REMEDIO_ID_ICONE+ ") VALUES ('ANADOR 500mg','Boehringer Ingelheim do Brasil Química e Farmacêutica LTDA','2130837567')");
+        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE +","+REMEDIO_ID_ICONE+ ") VALUES ('ATROVERAN COMPOSTO','Cosmed Indústria de Cosméticos e Medicamentos S.A.','2130837567')");
+        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE +","+REMEDIO_ID_ICONE+") VALUES ('BUSCOPAN COMPOSTO','Boehringer Ingelheim do Brasil Química e Farmacêutica Ltda.','2130837567')");
+        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE +","+REMEDIO_ID_ICONE+ ") VALUES ('Cataflam D','Novartis Biociências SA','2130837567')");
+        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE +","+REMEDIO_ID_ICONE+ ") VALUES ('CORISTINA® D','Cosmed Indústria de Cosméticos e Medicamentos S.A.','2130837567')");
+        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE +","+REMEDIO_ID_ICONE+ ") VALUES ('diclofenaco resinato','LABORATÓRIO TEUTO BRASILEIRO S/A.','2130837567')");
+        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE +","+REMEDIO_ID_ICONE+ ") VALUES ('IBUPROFENO 50mg/mL','Brainfarma Indústria Química e Farmacêutica S.A.','2130837567')");
+        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE +","+REMEDIO_ID_ICONE+ ") VALUES ('DIPIRONA SÓDICA 500mg/mL','Geolab Indústria Farmacêutica S/A','2130837567')");
+        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE +","+REMEDIO_ID_ICONE+ ") VALUES ('DORFLEX','Sanofi-Aventis Farmacêutica Ltda.','2130837567')");
+        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE +","+REMEDIO_ID_ICONE+ ") VALUES ('EXCEDRIN','Novartis Biociências S.A.','2130837567')");
+        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE +","+REMEDIO_ID_ICONE+ ") VALUES ('TYLENOL 500mg','Janssen-Cilag Farmacêutica Ltda.','2130837567')");
+        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE +","+REMEDIO_ID_ICONE+ ") VALUES ('TYLENOL 750mg','Janssen-Cilag Farmacêutica Ltda.','2130837567')");
+        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE +","+REMEDIO_ID_ICONE+ ") VALUES ('NEOSALDINA','Takeda Pharma Ltda.','2130837567')");
+        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE +","+REMEDIO_ID_ICONE+ ") VALUES ('PARACETAMOL','Medley Indústria Farmacêutica Ltda.','2130837567')");
+        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE +","+REMEDIO_ID_ICONE+ ") VALUES ('Sonrisal','GlaxoSmithKline','2130837567')");
+        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE +","+REMEDIO_ID_ICONE+ ") VALUES ('Sonrisal® Limão','GlaxoSmithKline','2130837567')");
+        db.execSQL("INSERT INTO " + TABELA_REMEDIO + "(" + REMEDIO_NOME + "," + REMEDIO_FABRICANTE +","+REMEDIO_ID_ICONE+ ") VALUES ('TORSILAX®','Brainfarma Indústria Química e Farmacêutica S.A.','2130837567')");
 
         db.execSQL("INSERT INTO "+ TABELA_COMPONENTE +"("+ COMPONENTE_NOME+") VALUES ('ácido acetilsalicílico')");
         db.execSQL("INSERT INTO "+ TABELA_COMPONENTE +"("+ COMPONENTE_NOME+") VALUES ('bicarbonato de sódio')");
