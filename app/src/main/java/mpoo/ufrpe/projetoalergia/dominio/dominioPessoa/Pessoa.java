@@ -16,13 +16,22 @@ public class Pessoa {
     private Date dataDeNascimento;
     private String cpf;
     private List<Remedio> remedio;
+    private String caminhoImagem;
 
-    public Pessoa(Usuario usuario, String nome, String cpf, Date dataDeNascimento) {
+    public String getCaminhoImagem() {
+        return caminhoImagem;
+    }
+
+    public void setCaminhoImagem(String caminhoImagem) {
+        this.caminhoImagem = caminhoImagem;
+    }
+
+    public Pessoa(Usuario usuario, String nome, String cpf, Date dataDeNascimento,String caminhoImagem) {
         this.usuario = usuario;
         this.nome = nome;
         this.cpf = cpf;
         this.dataDeNascimento = dataDeNascimento;
-//        this.dataDeNascimento = calendar;
+        this.caminhoImagem = caminhoImagem;
     }
 
     public Pessoa(){

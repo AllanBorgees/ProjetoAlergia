@@ -6,5 +6,7 @@
     <string name="title_activity_pesquisa">PesquisaActivity</string>
     <string name="title_activity_cadastro">CadastroActivity</string>
     <string name="title_activity_perfil_remedio">PerfilRemedioActivity</string>
+    <string name="btn_cadastrar">btn_cadastrar</string>
+    <string name="txtNome">txtNome</string>
 
 </resources>

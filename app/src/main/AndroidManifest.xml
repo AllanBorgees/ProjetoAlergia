@@ -27,6 +27,10 @@
             android:name=".gui.PerfilRemedioActivity"
             android:label="@string/title_activity_perfil_remedio" >
         </activity>
+        <activity
+            android:name=".gui.PerfilUsuarioActivity"
+            android:label="Perfil" >
+        </activity>
 
 
     </application>

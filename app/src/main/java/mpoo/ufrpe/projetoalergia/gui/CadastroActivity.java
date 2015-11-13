@@ -3,14 +3,21 @@ package mpoo.ufrpe.projetoalergia.gui;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -22,7 +29,6 @@ import mpoo.ufrpe.projetoalergia.R;
 import mpoo.ufrpe.projetoalergia.dominio.dominioPessoa.Pessoa;
 import mpoo.ufrpe.projetoalergia.dominio.dominioPessoa.Usuario;
 import mpoo.ufrpe.projetoalergia.negocio.UsuarioNegocio;
-import mpoo.ufrpe.projetoalergia.negocio.infra.Util;
 
 public class CadastroActivity extends AppCompatActivity {
 
@@ -33,10 +39,11 @@ public class CadastroActivity extends AppCompatActivity {
     private EditText editUsuarioSenhaConfirmar;
     private EditText edtPessoaDataDeNascimentoCadastro;
     private Date dataNascimento;
-
+    private String caminhoImagem;
     private Button btnCadastrar;
     private UsuarioNegocio usuarioNegocio;
     private static Context contexto;
+    public static final int IMAGEM_INTERNA = 12;
 
 
     @Override
@@ -64,6 +71,8 @@ public class CadastroActivity extends AppCompatActivity {
         edtPessoaDataDeNascimentoCadastro.setOnFocusChangeListener(listerner);
 
 
+
+
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,7 +86,7 @@ public class CadastroActivity extends AppCompatActivity {
                 String dataDeNascimento = edtPessoaDataDeNascimentoCadastro.getText().toString().trim();
 
                 Usuario usuario = new Usuario(login,senha);
-                Pessoa pessoa = new Pessoa(usuario,nome,cpf,dataNascimento);
+                Pessoa pessoa = new Pessoa(usuario,nome,cpf,dataNascimento, caminhoImagem);
                 cadastro(pessoa, senhaConfirmar);
 
             }
@@ -159,9 +168,7 @@ public class CadastroActivity extends AppCompatActivity {
             return false;
         }
 
-//        if(matcher.find() && cpf.length() != 11) {
-//            return false;
-//        }
+
         return true;
     }
 
@@ -223,5 +230,46 @@ public class CadastroActivity extends AppCompatActivity {
             edtPessoaDataDeNascimentoCadastro.setText(dt);
         }
     }
+
+    public void tirarFoto(View view){
+        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+        startActivityForResult(intent, 0);
+    }
+
+    public void pegarImg(View view){
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent, IMAGEM_INTERNA);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(data != null){
+            Bundle bundle = data.getExtras();
+            if(bundle != null){
+                Bitmap img = (Bitmap) bundle.get("data");
+                ImageView iv = (ImageView) findViewById(R.id.imageView);
+                iv.setImageBitmap(img);
+            }
+        }
+        if(requestCode == IMAGEM_INTERNA){
+            if(resultCode == RESULT_OK){
+                getContentResolver();
+                Uri imagemSelecionada = data.getData();
+                String[] colunas = {MediaStore.Images.Media.DATA};
+                Cursor cursor = getContentResolver().query(imagemSelecionada, colunas, null, null, null);
+                cursor.moveToFirst();
+                int indexColuna = cursor.getColumnIndex(colunas[0]);
+                caminhoImagem = cursor.getString(indexColuna);
+//                Log.i("PATH IMAGEM ", "------------- " + caminhoImagem);
+                cursor.close();
+                Bitmap bitmap = BitmapFactory.decodeFile(caminhoImagem);
+                ImageView iv = (ImageView)findViewById(R.id.imageView);
+                iv.setImageBitmap(bitmap);
+
+
+            }
+        }
+    }
+
 
 }

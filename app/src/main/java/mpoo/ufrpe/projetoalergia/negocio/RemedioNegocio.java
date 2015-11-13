@@ -1,11 +1,10 @@
 package mpoo.ufrpe.projetoalergia.negocio;
 
-import android.widget.ArrayAdapter;
-
 import java.util.List;
 
 import mpoo.ufrpe.projetoalergia.dao.RemedioDAO;
 import mpoo.ufrpe.projetoalergia.dominio.dominoRemedio.Remedio;
+import mpoo.ufrpe.projetoalergia.dominio.dominoRemedio.RemedioDTO;
 import mpoo.ufrpe.projetoalergia.negocio.infra.ProjetoAlergiaException;
 
 /**
@@ -21,14 +20,19 @@ public class RemedioNegocio {
 
     private RemedioDAO dao = RemedioDAO.getInstancia();
 
-    public List<String> consultarRemedio(String nome){
+    public List<RemedioDTO> consultarRemedio(String nome){
 
        return dao.buscarRemedios(nome);
 
     }
+    public Remedio retornarRemedioId(int id){
+        Remedio remedio = dao.pesquisarUmRemedioId(id);
+        return remedio;
+    }
 
-    public Remedio retornarRemedio(String nome)throws ProjetoAlergiaException {
-        Remedio remedio = dao.pesquisarUmRemedio(nome);
+
+    public Remedio retornarRemedioNome(String nome)throws ProjetoAlergiaException {
+        Remedio remedio = dao.pesquisarUmRemedioNome(nome);
         StringBuilder builder = new StringBuilder();
 
         if (remedio == null) {

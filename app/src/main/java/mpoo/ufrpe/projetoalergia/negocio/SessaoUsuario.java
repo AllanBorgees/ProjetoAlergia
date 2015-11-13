@@ -16,4 +16,9 @@ public class SessaoUsuario {
     public void setUsuarioLogado(Usuario usuario) {
         this.usuarioLogado = usuario;
     }
+
+    public Usuario getUsuarioLogado(){
+        return usuarioLogado;
+    }
+
 }

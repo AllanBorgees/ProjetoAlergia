@@ -1,83 +1,147 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="mpoo.ufrpe.projetoalergia.gui.CadastroActivity">
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".CadastroActivity">
 
 
-    <EditText
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Nome"
-        android:singleLine="true"
-        android:layout_marginTop="20dp"
-        android:id="@+id/edtNomePessoa"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="CPF"
-        android:singleLine="true"
-        android:layout_below="@id/edtNomePessoa"
-        android:layout_marginTop="20dp"
-        android:id="@+id/edtCpf"/>
+        <EditText
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Data De Nascimento"
-        android:singleLine="true"
-        android:layout_below="@+id/edtCpf"
-        android:layout_marginTop="20dp"
-        android:id="@+id/edtDataDeNascimentoCadastro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nome"
+            android:singleLine="true"
+            android:layout_marginTop="40dp"
+            android:id="@+id/edtNomePessoa"/>
 
-        />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="CPF"
+            android:singleLine="true"
+            android:layout_below="@id/edtNomePessoa"
+            android:layout_marginTop="10dp"
+            android:id="@+id/edtCpf"/>
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Data De Nascimento"
+            android:singleLine="true"
+            android:layout_below="@+id/edtCpf"
+            android:layout_marginTop="10dp"
+            android:id="@+id/edtDataDeNascimentoCadastro"
 
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/edtDataDeNascimentoCadastro"
-        android:singleLine="true"
-        android:id="@+id/edtLoginCadastro"
-        android:layout_marginTop="20dp"
-        android:hint="Login"/>
+            />
 
 
 
-    <EditText
-        android:layout_width="match_parent"
-        android:password="true"
-        android:layout_height="wrap_content"
-        android:id="@+id/edtSenhaCadastro"
-        android:singleLine="true"
-        android:layout_below="@id/edtLoginCadastro"
-        android:layout_marginTop="20dp"
-        android:hint="Senha"/>
-
-    <EditText
-        android:layout_width="match_parent"
-        android:password="true"
-        android:layout_height="wrap_content"
-        android:id="@+id/edtConfirmarSenhaCadastro"
-        android:singleLine="true"
-        android:layout_below="@id/edtSenhaCadastro"
-        android:layout_marginTop="20dp"
-        android:hint="Repita a senha"/>
-
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/edtConfirmarSenhaCadastro"
-        android:hint="Cadastrar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:id="@+id/btnCadastrarCadastro"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edtDataDeNascimentoCadastro"
+            android:singleLine="true"
+            android:id="@+id/edtLoginCadastro"
+            android:layout_marginTop="20dp"
+            android:hint="Login"/>
 
 
 
-</RelativeLayout>
+        <EditText
+            android:layout_width="match_parent"
+            android:password="true"
+            android:layout_height="wrap_content"
+            android:id="@+id/edtSenhaCadastro"
+            android:singleLine="true"
+            android:layout_below="@id/edtLoginCadastro"
+            android:layout_marginTop="20dp"
+            android:hint="Senha"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:password="true"
+            android:layout_height="wrap_content"
+            android:id="@+id/edtConfirmarSenhaCadastro"
+            android:singleLine="true"
+            android:layout_below="@id/edtSenhaCadastro"
+            android:layout_marginTop="20dp"
+            android:hint="Repita a senha"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+
+
+
+
+            <Button
+                android:id="@+id/iv"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+                android:text="Enviar foto"
+                android:onClick="pegarImg"
+                android:layout_gravity="right" />
+
+
+
+
+
+            <Button
+                android:id="@+id/button1"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Tirar foto"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+                android:onClick="tirarFoto"
+                android:layout_gravity="right" />
+
+
+
+
+        <Button
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:hint="Cadastrar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:id="@+id/btnCadastrarCadastro"/>
+
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+</ScrollView>

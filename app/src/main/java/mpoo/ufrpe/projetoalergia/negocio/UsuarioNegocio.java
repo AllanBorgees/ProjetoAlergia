@@ -1,8 +1,5 @@
 package mpoo.ufrpe.projetoalergia.negocio;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import mpoo.ufrpe.projetoalergia.dao.UsuarioDAO;
 import mpoo.ufrpe.projetoalergia.dominio.dominioPessoa.Pessoa;
 import mpoo.ufrpe.projetoalergia.dominio.dominioPessoa.Usuario;
@@ -68,6 +65,8 @@ public class UsuarioNegocio {
     public void inserirUsuario(Pessoa pessoa){
         dao.cadastrarUsuario(pessoa);
     }
+    
+
 
 
 
