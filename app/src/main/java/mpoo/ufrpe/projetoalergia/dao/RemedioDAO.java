@@ -27,7 +27,7 @@ public class RemedioDAO {
         return instancia;
     }
 
-    public List<RemedioDTO> buscarRemedios(String nome) {
+    public List<String> buscarRemedios(String nome) {
 
         db = helper.getWritableDatabase();
 

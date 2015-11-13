@@ -104,8 +104,6 @@ public class PesquisaActivity extends AppCompatActivity implements View.OnClickL
                 break;
         }
         return super.onOptionsItemSelected(item);
-
-
     }
 
     public static Context getContexto() {

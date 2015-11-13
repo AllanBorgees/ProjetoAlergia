@@ -5,6 +5,13 @@
     tools:context=".CadastroActivity">
 
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nome"
+        android:singleLine="true"
+        android:layout_marginTop="20dp"
+        android:id="@+id/edtNomePessoa"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,14 +36,6 @@
             android:layout_marginTop="10dp"
             android:id="@+id/edtCpf"/>
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Data De Nascimento"
-            android:singleLine="true"
-            android:layout_below="@+id/edtCpf"
-            android:layout_marginTop="10dp"
-            android:id="@+id/edtDataDeNascimentoCadastro"
 
             />
 
